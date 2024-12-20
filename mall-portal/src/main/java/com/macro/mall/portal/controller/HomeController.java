@@ -46,7 +46,7 @@ public class HomeController {
     @Operation(summary = "获取首页商品分类")
     @RequestMapping(value = "/productCateList/{parentId}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProductCategory>> getProductCateList(@PathVariable Long parentId) {
+        public CommonResult<List<PmsProductCategory>> getProductCateList(@PathVariable Long parentId) {
         List<PmsProductCategory> productCategoryList = homeService.getProductCateList(parentId);
         return CommonResult.success(productCategoryList);
     }

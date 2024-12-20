@@ -26,10 +26,10 @@ import org.springframework.web.server.ServerWebExchange;
 import java.util.*;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description Sa-Token相关配置
  * @date 2023/11/28
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @Configuration
 public class SaTokenConfig {
@@ -64,6 +64,7 @@ public class SaTokenConfig {
                     String requestPath = SaHolder.getRequest().getRequestPath();
                     // 创建路径匹配器
                     PathMatcher pathMatcher = new AntPathMatcher();
+                    // 遍历所有路径规则（遍历Map中的每个元素）
                     Set<Map.Entry<Object, Object>> entrySet = pathResourceMap.entrySet();
                     for (Map.Entry<Object, Object> entry : entrySet) {
                         String pattern = (String) entry.getKey();

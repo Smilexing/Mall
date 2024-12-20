@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 统一认证授权接口
  * @date 2024/1/30
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @Controller
 @Tag(name = "AuthController", description = "统一认证授权接口")

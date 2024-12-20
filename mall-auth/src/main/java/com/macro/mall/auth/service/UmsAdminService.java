@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 后台用户服务远程调用Service
  * @date 2024/1/30
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @FeignClient("mall-admin")
 public interface UmsAdminService {

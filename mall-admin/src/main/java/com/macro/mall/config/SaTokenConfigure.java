@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description Sa-Token相关配置
  * @date 2023/11/28
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @Configuration
 public class SaTokenConfigure {

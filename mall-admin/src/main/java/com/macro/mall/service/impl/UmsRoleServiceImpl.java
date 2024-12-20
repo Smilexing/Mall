@@ -71,6 +71,7 @@ public class UmsRoleServiceImpl implements UmsRoleService {
 
     @Override
     public List<UmsMenu> getMenuList(Long adminId) {
+        // 这里是关联admin和meun的关系，其底层还是通过role来做的，role->menu
         return roleDao.getMenuList(adminId);
     }
 

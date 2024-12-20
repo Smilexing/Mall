@@ -28,11 +28,11 @@ import cn.dev33.satoken.stp.StpLogic;
 import java.util.List;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 前台商城用户登录认证工具类
  * 拷贝于默认的StpUtil，仅改动了TYPE
  * @date 2024/1/26
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 public class StpMemberUtil {
 

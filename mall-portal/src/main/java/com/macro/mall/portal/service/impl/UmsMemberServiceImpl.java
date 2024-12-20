@@ -126,11 +126,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     @Override
     public UmsMember getCurrentMember() {
         UserDto userDto = (UserDto) StpMemberUtil.getSession().get(AuthConstant.STP_MEMBER_INFO);
+        // 从redis中获取用户信息
         UmsMember member = memberCacheService.getMember(userDto.getId());
         if(member!=null){
             return member;
         }else{
             member = getById(userDto.getId());
+            // 设置到缓存中
             memberCacheService.setMember(member);
             return member;
         }

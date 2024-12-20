@@ -31,6 +31,7 @@ public class MemberCollectionServiceImpl implements MemberCollectionService {
         productCollection.setMemberId(member.getId());
         productCollection.setMemberNickname(member.getNickname());
         productCollection.setMemberIcon(member.getIcon());
+        // 先查后增，防止重复插入
         MemberProductCollection findCollection = productCollectionRepository.findByMemberIdAndProductId(productCollection.getMemberId(), productCollection.getProductId());
         if (findCollection == null) {
             productCollectionRepository.save(productCollection);

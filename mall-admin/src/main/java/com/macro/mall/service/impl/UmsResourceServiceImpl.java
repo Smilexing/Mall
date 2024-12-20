@@ -75,13 +75,20 @@ public class UmsResourceServiceImpl implements UmsResourceService {
         return resourceMapper.selectByExample(new UmsResourceExample());
     }
 
+    /**
+     * 将所有的资源路径与资源信息的映射关系存入 Redis 中
+     * @return {@link Map }<{@link String },{@link String }>
+     */
     @Override
     public Map<String,String> initPathResourceMap() {
         Map<String,String> pathResourceMap = new TreeMap<>();
+        // 资源（接口）
         List<UmsResource> resourceList = resourceMapper.selectByExample(new UmsResourceExample());
         for (UmsResource resource : resourceList) {
+            // 拼接url：/admin/resource/** id:商品管理 （具体看表 ums_resource)
             pathResourceMap.put("/"+applicationName+resource.getUrl(),resource.getId()+":"+resource.getName());
         }
+        // 存入redis
         redisService.del(AuthConstant.PATH_RESOURCE_MAP);
         redisService.hSetAll(AuthConstant.PATH_RESOURCE_MAP, pathResourceMap);
         return pathResourceMap;

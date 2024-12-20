@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 支付宝支付Controller
  * @date 2023/9/8
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @Controller
 @Tag(name = "AlipayController", description = "支付宝支付相关接口")

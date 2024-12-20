@@ -45,11 +45,14 @@ public class PmsProductAttributeServiceImpl implements PmsProductAttributeServic
         int count = productAttributeMapper.insertSelective(pmsProductAttribute);
         //新增商品属性以后需要更新商品属性分类数量
         PmsProductAttributeCategory pmsProductAttributeCategory = productAttributeCategoryMapper.selectByPrimaryKey(pmsProductAttribute.getProductAttributeCategoryId());
+        // 0-新增规格，1-sku属性
         if(pmsProductAttribute.getType()==0){
+            // 新增规格数量
             pmsProductAttributeCategory.setAttributeCount(pmsProductAttributeCategory.getAttributeCount()+1);
         }else if(pmsProductAttribute.getType()==1){
             pmsProductAttributeCategory.setParamCount(pmsProductAttributeCategory.getParamCount()+1);
         }
+        // 更新
         productAttributeCategoryMapper.updateByPrimaryKey(pmsProductAttributeCategory);
         return count;
     }

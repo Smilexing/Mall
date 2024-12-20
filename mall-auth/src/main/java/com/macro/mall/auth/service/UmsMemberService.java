@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 前台会员服务远程调用Service
  * @date 2024/1/30
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @FeignClient("mall-portal")
 public interface UmsMemberService {

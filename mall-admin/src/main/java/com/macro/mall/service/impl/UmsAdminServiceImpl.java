@@ -227,23 +227,28 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         }
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(param.getUsername());
+        // 先查询要修改的数据是否存在（用户名唯一）
         List<UmsAdmin> adminList = adminMapper.selectByExample(example);
         if(CollUtil.isEmpty(adminList)){
             return -2;
         }
         UmsAdmin umsAdmin = adminList.get(0);
+        // 校验旧密码（hutool处理）
         if(!BCrypt.checkpw(param.getOldPassword(),umsAdmin.getPassword())){
             return -3;
         }
         umsAdmin.setPassword(BCrypt.hashpw(param.getNewPassword()));
         adminMapper.updateByPrimaryKey(umsAdmin);
+        // 删除缓存
         adminCacheService.delAdmin(umsAdmin.getId());
         return 1;
     }
 
     @Override
     public UmsAdmin getCurrentAdmin() {
+        // 登陆之后就可以从session中获取用户信息（以登陆存放的token标识符）
         UserDto userDto = (UserDto) StpUtil.getSession().get(AuthConstant.STP_ADMIN_INFO);
+        // 从缓存中读
         UmsAdmin admin = adminCacheService.getAdmin(userDto.getId());
         if (admin == null) {
             admin = adminMapper.selectByPrimaryKey(userDto.getId());

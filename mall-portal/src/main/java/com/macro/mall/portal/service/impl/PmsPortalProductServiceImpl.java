@@ -73,6 +73,8 @@ public class PmsPortalProductServiceImpl implements PmsPortalProductService {
     public List<PmsProductCategoryNode> categoryTreeList() {
         PmsProductCategoryExample example = new PmsProductCategoryExample();
         List<PmsProductCategory> allList = productCategoryMapper.selectByExample(example);
+        // 过滤获取所有顶级菜单数据，依次填充每个顶级菜单其下的children（list）
+        // 并不是严格的树形结构，而是使用嵌套list来代替，那如果是三层则还需要再嵌套一次
         List<PmsProductCategoryNode> result = allList.stream()
                 .filter(item -> item.getParentId().equals(0L))
                 .map(item -> covert(item, allList)).collect(Collectors.toList());

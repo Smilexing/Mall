@@ -16,6 +16,7 @@ public class PathResourceRulesHolder {
     @Autowired
     private UmsResourceService resourceService;
 
+    // 角色资源规则初始化--spring启动之后
     @PostConstruct
     public void initPathResourceMap(){
         resourceService.initPathResourceMap();

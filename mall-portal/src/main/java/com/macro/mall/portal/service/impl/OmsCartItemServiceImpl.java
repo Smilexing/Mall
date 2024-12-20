@@ -35,6 +35,11 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
     @Autowired
     private UmsMemberService memberService;
 
+    /**
+     * 添加商品到购物车中
+     * @param cartItem
+     * @return int
+     */
     @Override
     public int add(OmsCartItem cartItem) {
         int count;
@@ -42,7 +47,9 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
         cartItem.setMemberId(currentMember.getId());
         cartItem.setMemberNickname(currentMember.getNickname());
         cartItem.setDeleteStatus(0);
+        // 对添加商品进行校验（若存在购物车则增加个数）
         OmsCartItem existCartItem = getCartItem(cartItem);
+        // 购物车未添加商品
         if (existCartItem == null) {
             cartItem.setCreateDate(new Date());
             count = cartItemMapper.insert(cartItem);
@@ -61,6 +68,7 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
         OmsCartItemExample example = new OmsCartItemExample();
         OmsCartItemExample.Criteria criteria = example.createCriteria().andMemberIdEqualTo(cartItem.getMemberId())
                 .andProductIdEqualTo(cartItem.getProductId()).andDeleteStatusEqualTo(0);
+        // 商品规格不为空，则将当前商品的sku信息进行查询
         if (cartItem.getProductSkuId()!=null) {
             criteria.andProductSkuIdEqualTo(cartItem.getProductSkuId());
         }
@@ -80,12 +88,15 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
 
     @Override
     public List<CartPromotionItem> listPromotion(Long memberId, List<Long> cartIds) {
+        // 获取指定会员的购物车物品list
         List<OmsCartItem> cartItemList = list(memberId);
         if(CollUtil.isNotEmpty(cartIds)){
+            // 过滤获取有优惠的商品id，填充至list中
             cartItemList = cartItemList.stream().filter(item->cartIds.contains(item.getId())).collect(Collectors.toList());
         }
         List<CartPromotionItem> cartPromotionItemList = new ArrayList<>();
         if(!CollectionUtils.isEmpty(cartItemList)){
+            // 计算最终价格的优惠信息
             cartPromotionItemList = promotionService.calcCartPromotion(cartItemList);
         }
         return cartPromotionItemList;

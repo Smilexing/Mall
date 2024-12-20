@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @auther macrozheng
+ * @auther tomsmile
  * @description 自定义权限验证接口扩展
  * @date 2024/1/25
- * @github https://github.com/macrozheng
+ * @github  https://github.com/Smilexing/Mall
  */
 @Component
 public class StpInterfaceImpl implements StpInterface {

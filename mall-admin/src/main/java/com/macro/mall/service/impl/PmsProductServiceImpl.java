@@ -70,6 +70,7 @@ public class PmsProductServiceImpl implements PmsProductService {
         int count;
         //创建商品
         PmsProduct product = productParam;
+        // 数据库是主键自增（无需设置id）
         product.setId(null);
         productMapper.insertSelective(product);
         //根据促销类型设置价格：会员价格、阶梯价格、满减价格
@@ -107,6 +108,7 @@ public class PmsProductServiceImpl implements PmsProductService {
                 sb.append(String.format("%04d", productId));
                 //三位索引id
                 sb.append(String.format("%03d", i+1));
+                // skuCode 为拼接字符串
                 skuStock.setSkuCode(sb.toString());
             }
         }
@@ -309,16 +311,26 @@ public class PmsProductServiceImpl implements PmsProductService {
      */
     private void relateAndInsertList(Object dao, List dataList, Long productId) {
         try {
+            // 如果传入的 dataList 为空，则直接返回，避免后续操作
             if (CollectionUtils.isEmpty(dataList)) return;
+
+            // 遍历 dataList 中的每一项，设置其 ID 为 null（用于确保插入时 ID 是由数据库生成）
             for (Object item : dataList) {
+                // 获取并调用 "setId" 方法，设置 ID 为 null
                 Method setId = item.getClass().getMethod("setId", Long.class);
-                setId.invoke(item, (Long) null);
+                setId.invoke(item, (Long) null);  // 设置为 null，表示插入新记录，数据库会生成 ID
+
+                // 获取并调用 "setProductId" 方法，设置与商品的关联 ID
                 Method setProductId = item.getClass().getMethod("setProductId", Long.class);
-                setProductId.invoke(item, productId);
+                setProductId.invoke(item, productId);  // 设置与商品的 ID 关联
             }
+
+            // 获取并调用 dao 的 "insertList" 方法，批量插入 dataList 中的数据
             Method insertList = dao.getClass().getMethod("insertList", List.class);
             insertList.invoke(dao, dataList);
+
         } catch (Exception e) {
+            // 捕获任何异常并记录日志，抛出 RuntimeException 异常
             LOGGER.warn("创建产品出错:{}", e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
